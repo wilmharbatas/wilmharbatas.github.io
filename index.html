@@ -1,99 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WAB Intro</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: black;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
+.intro-text {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: red;
+  font-size: 60px;   /* mas malaki kaysa 40px */
+  font-weight: bold;
+  text-align: center;
+  z-index: 5;
+  animation: blink 1s infinite; /* blinking effect */
+}
 
-    /* Fullscreen container */
-    .intro {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      z-index: 10;
-    }
-
-    .intro img {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 1.5s ease-in-out;
-    }
-
-    .intro img.active {
-      opacity: 1;
-    }
-
-    .main {
-      display: none;
-      padding-top: 100px;
-    }
-
-    .social {
-      margin-top: 20px;
-    }
-
-    .social img {
-      width: 40px;
-      margin: 0 10px;
-    }
-  </style>
-</head>
-<body>
-  <!-- INTRO IMAGES -->
-  <div class="intro">
-    <img src="intro1.jpg" class="active">
-    <img src="intro2.jpg">
-  </div>
-
-  <!-- MAIN CONTENT -->
-  <div class="main">
-    <h1>WAB</h1>
-    <div class="social">
-      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"></a>
-      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"></a>
-      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord"></a>
-      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
-    </div>
-  </div>
-
-  <audio autoplay>
-    <source src="wab.mp3" type="audio/mpeg">
-  </audio>
-
-  <script>
-    const slides = document.querySelectorAll(".intro img");
-    let current = 0;
-
-    function showNext() {
-      slides[current].classList.remove("active");
-      current++;
-      if (current < slides.length) {
-        slides[current].classList.add("active");
-        setTimeout(showNext, 2000); // 2s per image
-      } else {
-        document.querySelector(".intro").style.display = "none";
-        document.querySelector(".main").style.display = "block";
-      }
-    }
-
-    setTimeout(showNext, 2000); // start slideshow after 2s
-  </script>
-</body>
-</html>
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
