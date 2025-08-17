@@ -1,111 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ITSMEWAB</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Intro</title>
   <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: black;
-      font-family: "Courier New", monospace;
-      overflow: hidden;
-    }
-
-    /* Matrix rain */
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
+    html, body {
       height: 100%;
-      z-index: 0;
+      margin: 0;
     }
-
-    .content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    /* Fullscreen background image */
+    .bg {
+      position: fixed;
+      inset: 0;
+      background: #000 url("./intro.jpg") center / cover no-repeat;
     }
-
-    .logo {
-      width: 180px;
-      border-radius: 50%;
-      box-shadow: 0 0 25px #ff1a1a;
-      margin-bottom: 20px;
-      animation: glow 2s infinite alternate;
+    /* Dark overlay to keep the image moody (optional) */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.25);
     }
-
-    @keyframes glow {
-      from { box-shadow: 0 0 15px #ff1a1a; }
-      to { box-shadow: 0 0 40px #ff1a1a; }
+    /* Centered message */
+    .center {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 16px;
     }
-
-    /* ITSMEWAB text */
-    .terminal {
-      font-size: 50px;
-      font-weight: bold;
+    .panel {
+      background: rgba(255,255,255,0.85); /* ensures black text stays readable */
+      padding: 18px 22px;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      animation: pop 600ms ease-out both;
+    }
+    h1 {
+      margin: 0;
+      font: 900 clamp(24px, 6vw, 56px)/1.05 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: #000; /* BLACK text as requested */
+      letter-spacing: .02em;
       text-align: center;
-      color: black;
-      text-shadow: 
-        0 0 5px #00ccff,
-        0 0 10px #00ccff,
-        0 0 20px #00ccff,
-        0 0 40px #00ccff,
-        0 0 80px #00ccff;
-      position: relative;
     }
-
-    .typing {
-      display: inline-block;
-      border-right: 2px solid #00ccff;
-      white-space: nowrap;
-      overflow: hidden;
-      position: relative;
+    @keyframes pop {
+      from { transform: scale(.96); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
     }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="overlay"></div>
 
-    @keyframes blink {
-      0% { border-color: transparent; }
-      50% { border-color: #00ccff; }
-      100% { border-color: transparent; }
-    }
-
-    /* Glitch effect */
-    .typing::before,
-    .typing::after {
-      content: attr(data-text);
-      position: absolute;
-      left: 0;
-      overflow: hidden;
-      clip: rect(0, 900px, 0, 0);
-    }
-
-    .typing::before {
-      animation: glitchTop 3s infinite linear alternate-reverse;
-      color: #ff1a1a;
-    }
-
-    .typing::after {
-      animation: glitchBottom 2.5s infinite linear alternate-reverse;
-      color: #00ff88;
-    }
-
-    @keyframes glitchTop {
-      10% { clip: rect(0, 900px, 50px, 0); transform: translate(-3px, -3px); }
-      30% { clip: rect(0, 900px, 80px, 0); transform: translate(3px, 3px); }
-    }
-
-    @keyframes glitchBottom {
-      10% { clip: rect(0, 900px, 60px, 0); transform: translate(3px, 3px); }
-      30% { clip: rect(0, 900px, 90px, 0); transform: translate(-3px, -3px); }
-    }
-
-    /* Social Icons */
+  <div class="center">
+    <div class="panel">
+      <h1>YOUR DEVICE HAS BEEN HACKED</h1>
+    </div>
+  </div>
+</body>
+</html>    /* Social Icons */
     .social-icons {
       margin-top: 30px;
       display: flex;
