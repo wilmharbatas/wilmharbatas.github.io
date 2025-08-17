@@ -3,90 +3,112 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hacked Intro</title>
+  <title>WAB Intro</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      background: black;
       overflow: hidden;
-      height: 100vh;
+      background: black;
+      color: white;
+      font-family: monospace;
     }
 
-    /* Matrix Rain Canvas */
     canvas {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
-      z-index: 1;
+      z-index: -1;
     }
 
-    /* Red Hacked Text */
-    .intro-text {
-      position: fixed;
-      top: 40%;
+    .hack-text {
+      position: absolute;
+      top: 30%;
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translateX(-50%);
       color: red;
-      font-size: 60px;
+      font-size: 50px;
       font-weight: bold;
       text-align: center;
-      z-index: 2;
-      animation: blink 1s infinite;
-      text-shadow: 0 0 10px red, 0 0 20px darkred;
+      text-shadow: 0 0 15px red, 0 0 30px darkred;
     }
 
-    /* WAB text */
-    .wab {
-      position: fixed;
+    .wab-text {
+      position: absolute;
       top: 55%;
       left: 50%;
-      transform: translate(-50%, -50%);
-      color: white;
-      font-size: 20px;
+      transform: translateX(-50%);
+      font-size: 25px;
       font-weight: bold;
-      text-align: center;
-      z-index: 2;
+      color: white;
+      text-shadow: 0 0 10px white;
     }
 
-    /* Social Icons */
-    .social-icons {
-      position: fixed;
-      top: 62%;
+    .socials {
+      position: absolute;
+      top: 65%;
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translateX(-50%);
       display: flex;
-      gap: 10px;
-      z-index: 2;
+      gap: 15px;
     }
 
-    .social-icons img {
-      width: 15px;
-      height: 15px;
+    .socials img {
+      width: 30px;
+      height: 30px;
+      filter: drop-shadow(0 0 5px white);
     }
 
-    @keyframes blink {
-      0% { opacity: 1; }
-      50% { opacity: 0; }
-      100% { opacity: 1; }
+    button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: black;
+      color: red;
+      padding: 10px 15px;
+      border-radius: 10px;
+      border: 2px solid red;
+      font-size: 16px;
+      cursor: pointer;
+      text-shadow: 0 0 10px red;
+    }
+
+    button:hover {
+      background: red;
+      color: black;
+      text-shadow: 0 0 10px black;
     }
   </style>
 </head>
 <body>
+
+  <!-- Matrix Background -->
   <canvas id="matrix"></canvas>
-  
-  <div class="intro-text">YOUR DEVICE HAS BEEN HACKED</div>
-  <div class="wab">WAB</div>
-  
-  <div class="social-icons">
+
+  <!-- Hacked Text -->
+  <div class="hack-text">YOUR DEVICE HAS BEEN HACKED</div>
+
+  <!-- WAB -->
+  <div class="wab-text">WAB</div>
+
+  <!-- Logos -->
+  <div class="socials">
     <img src="fb.png" alt="Facebook">
     <img src="ig.png" alt="Instagram">
     <img src="dc.png" alt="Discord">
     <img src="yt.png" alt="YouTube">
   </div>
 
+  <!-- Music -->
+  <audio id="bg-music" autoplay loop>
+    <source src="grahh.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Play/Pause Button -->
+  <button onclick="toggleMusic()">▶ Play / ⏸ Pause</button>
+
   <script>
-    // Matrix Rain Effect
+    // MATRIX BACKGROUND
     const canvas = document.getElementById("matrix");
     const ctx = canvas.getContext("2d");
 
@@ -94,23 +116,19 @@
     canvas.width = window.innerWidth;
 
     const letters = "01";
-    const fontSize = 16;
+    const fontSize = 14;
     const columns = canvas.width / fontSize;
-
-    const drops = [];
-    for (let x = 0; x < columns; x++) {
-      drops[x] = 1;
-    }
+    const drops = Array(Math.floor(columns)).fill(1);
 
     function draw() {
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = "#0F0"; // Green
+      ctx.fillStyle = "#0F0"; 
       ctx.font = fontSize + "px monospace";
 
       for (let i = 0; i < drops.length; i++) {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        const text = letters[Math.floor(Math.random() * letters.length)];
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
         if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
@@ -119,8 +137,17 @@
         drops[i]++;
       }
     }
-
     setInterval(draw, 33);
+
+    // MUSIC TOGGLE
+    const music = document.getElementById("bg-music");
+    function toggleMusic() {
+      if (music.paused) {
+        music.play();
+      } else {
+        music.pause();
+      }
+    }
   </script>
 </body>
 </html>
