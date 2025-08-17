@@ -1,18 +1,126 @@
-.intro-text {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: red;
-  font-size: 60px;   /* mas malaki kaysa 40px */
-  font-weight: bold;
-  text-align: center;
-  z-index: 5;
-  animation: blink 1s infinite; /* blinking effect */
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hacked Intro</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      overflow: hidden;
+      height: 100vh;
+    }
 
-@keyframes blink {
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
-}
+    /* Matrix Rain Canvas */
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    /* Red Hacked Text */
+    .intro-text {
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: red;
+      font-size: 60px;
+      font-weight: bold;
+      text-align: center;
+      z-index: 2;
+      animation: blink 1s infinite;
+      text-shadow: 0 0 10px red, 0 0 20px darkred;
+    }
+
+    /* WAB text */
+    .wab {
+      position: fixed;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      z-index: 2;
+    }
+
+    /* Social Icons */
+    .social-icons {
+      position: fixed;
+      top: 62%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      gap: 10px;
+      z-index: 2;
+    }
+
+    .social-icons img {
+      width: 15px;
+      height: 15px;
+    }
+
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+  
+  <div class="intro-text">YOUR DEVICE HAS BEEN HACKED</div>
+  <div class="wab">WAB</div>
+  
+  <div class="social-icons">
+    <img src="fb.png" alt="Facebook">
+    <img src="ig.png" alt="Instagram">
+    <img src="dc.png" alt="Discord">
+    <img src="yt.png" alt="YouTube">
+  </div>
+
+  <script>
+    // Matrix Rain Effect
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const letters = "01";
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+
+    const drops = [];
+    for (let x = 0; x < columns; x++) {
+      drops[x] = 1;
+    }
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#0F0"; // Green
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 33);
+  </script>
+</body>
+</html>
