@@ -3,113 +3,119 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hacked Page</title>
+  <title>Hacked</title>
   <style>
-    body, html {
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      width: 100%;
       height: 100%;
       overflow: hidden;
       font-family: Arial, sans-serif;
-    }
-
-    /* Intro screen */
-    #intro {
-      position: fixed;
-      inset: 0;
-      background: url("hacker1.jpg") center/cover no-repeat;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 1000;
-    }
-
-    #intro h1 {
-      font-size: 3em;
       color: black;
-      background: rgba(255,255,255,0.7);
-      padding: 15px 25px;
-      border-radius: 10px;
-      animation: blink 1s infinite alternate;
     }
 
-    @keyframes blink {
-      from { opacity: 0.5; }
-      to { opacity: 1; }
-    }
-
-    /* Main screen */
-    #main {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: url("hacker2.jpg") center/cover no-repeat;
+    .intro, .next {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       flex-direction: column;
-      color: white;
       text-align: center;
+      background-size: cover;
+      background-position: center;
     }
 
-    #main h1 {
-      font-size: 5em;
+    .intro {
+      background: url("https://i.imgur.com/vvZhTna.jpg") center/cover no-repeat; /* Anonymous mask */
+      animation: hideIntro 5s forwards;
+    }
+
+    @keyframes hideIntro {
+      0% {opacity: 1;}
+      100% {opacity: 0; visibility: hidden;}
+    }
+
+    .intro h1 {
+      background: white;
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-size: 26px;
+      font-weight: bold;
+      animation: textBlink 1s infinite alternate;
+    }
+
+    @keyframes textBlink {
+      0% {opacity: 1;}
+      100% {opacity: 0.3;}
+    }
+
+    .next {
+      background: url("https://i.imgur.com/rd91U4k.jpg") center/cover no-repeat; /* Hooded group */
+      opacity: 0;
+      animation: showNext 6s forwards;
+      animation-delay: 5s;
+    }
+
+    @keyframes showNext {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    .next h2 {
+      font-size: 40px;
+      font-weight: bold;
       color: white;
-      text-shadow: 0 0 10px red, 0 0 20px red, 0 0 40px red;
-      margin-bottom: 30px;
+      text-shadow: 2px 2px 10px red;
+      margin-bottom: 20px;
     }
 
-    /* Social icons */
     .socials {
       display: flex;
       gap: 20px;
     }
 
-    .socials a img {
+    .socials img {
       width: 50px;
       height: 50px;
-      filter: drop-shadow(0 0 5px black);
+      filter: drop-shadow(2px 2px 5px black);
+      cursor: pointer;
       transition: transform 0.3s;
     }
-
-    .socials a img:hover {
+    .socials img:hover {
       transform: scale(1.2);
     }
   </style>
-
-  <script>
-    window.onload = function() {
-      setTimeout(() => {
-        document.getElementById("intro").style.display = "none";
-        document.getElementById("main").style.display = "flex";
-      }, 5000); // 5 seconds
-    }
-  </script>
 </head>
 <body>
-  <!-- Intro -->
-  <div id="intro">
+
+  <!-- Sound -->
+  <audio autoplay loop>
+    <source src="wab.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- First intro screen -->
+  <div class="intro">
     <h1>YOUR DEVICE HAS BEEN HACKED</h1>
   </div>
 
-  <!-- Main screen -->
-  <div id="main">
-    <h1>WAB</h1>
+  <!-- Next screen -->
+  <div class="next">
+    <h2>WAB</h2>
     <div class="socials">
-      <a href="https://facebook.com" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
-      </a>
-      <a href="https://instagram.com" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram">
-      </a>
-      <a href="https://discord.com" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="Discord">
-      </a>
-      <a href="https://youtube.com" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
-      </a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
     </div>
   </div>
+
 </body>
 </html>
