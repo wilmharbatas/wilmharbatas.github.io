@@ -3,48 +3,156 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hacker Style Website</title>
+  <title>ITSMEWAB</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
+      height: 100vh;
       background: black;
-      color: #00ff00;
-      font-family: "Courier New", Courier, monospace;
+      font-family: "Courier New", monospace;
       overflow: hidden;
     }
+
+    /* Matrix rain */
     canvas {
-      display: block;
-    }
-    .title {
-      position: absolute;
-      top: 20%;
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .logo {
+      width: 180px;
+      border-radius: 50%;
+      box-shadow: 0 0 25px #ff1a1a;
+      margin-bottom: 20px;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 15px #ff1a1a; }
+      to { box-shadow: 0 0 40px #ff1a1a; }
+    }
+
+    /* ITSMEWAB text */
+    .terminal {
+      font-size: 50px;
+      font-weight: bold;
       text-align: center;
-      font-size: 2.5em;
-      color: #00ff00;
-      text-shadow: 0 0 10px #00ff00;
-      animation: flicker 1.5s infinite alternate;
+      color: black;
+      text-shadow: 
+        0 0 5px #00ccff,
+        0 0 10px #00ccff,
+        0 0 20px #00ccff,
+        0 0 40px #00ccff,
+        0 0 80px #00ccff;
+      position: relative;
     }
-    @keyframes flicker {
-      from { opacity: 1; }
-      to { opacity: 0.5; }
+
+    .typing {
+      display: inline-block;
+      border-right: 2px solid #00ccff;
+      white-space: nowrap;
+      overflow: hidden;
+      position: relative;
     }
-    .footer {
+
+    @keyframes blink {
+      0% { border-color: transparent; }
+      50% { border-color: #00ccff; }
+      100% { border-color: transparent; }
+    }
+
+    /* Glitch effect */
+    .typing::before,
+    .typing::after {
+      content: attr(data-text);
       position: absolute;
-      bottom: 10px;
-      width: 100%;
-      text-align: center;
-      color: #00ff00;
-      font-size: 14px;
+      left: 0;
+      overflow: hidden;
+      clip: rect(0, 900px, 0, 0);
+    }
+
+    .typing::before {
+      animation: glitchTop 3s infinite linear alternate-reverse;
+      color: #ff1a1a;
+    }
+
+    .typing::after {
+      animation: glitchBottom 2.5s infinite linear alternate-reverse;
+      color: #00ff88;
+    }
+
+    @keyframes glitchTop {
+      10% { clip: rect(0, 900px, 50px, 0); transform: translate(-3px, -3px); }
+      30% { clip: rect(0, 900px, 80px, 0); transform: translate(3px, 3px); }
+    }
+
+    @keyframes glitchBottom {
+      10% { clip: rect(0, 900px, 60px, 0); transform: translate(3px, 3px); }
+      30% { clip: rect(0, 900px, 90px, 0); transform: translate(-3px, -3px); }
+    }
+
+    /* Social Icons */
+    .social-icons {
+      margin-top: 30px;
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+    }
+
+    .social-icons a img {
+      width: 50px;
+      height: 50px;
+      filter: drop-shadow(0 0 10px #00ccff);
+      transition: transform 0.3s, filter 0.3s;
+    }
+
+    .social-icons a img:hover {
+      transform: scale(1.2);
+      filter: drop-shadow(0 0 20px #ff1a1a);
     }
   </style>
 </head>
 <body>
+  <!-- Matrix rain -->
   <canvas id="matrix"></canvas>
-  <div class="title">WELCOME TO THE SYSTEM</div>
-  <div class="footer">© 2025 Hacker Website | By Wab</div>
 
+  <!-- Content -->
+  <div class="content">
+    <img src="https://raw.githubusercontent.com/wilmharbatas/wilmharbatas.github.io/main/cross.jpg" 
+         alt="Logo" class="logo">
+    <div class="terminal">
+      <span id="typing" class="typing" data-text="ITSMEWAB">ITSMEWAB</span>
+    </div>
+
+    <!-- Social Media Logos -->
+    <div class="social-icons">
+      <a href="https://facebook.com" target="_blank">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
+      </a>
+      <a href="https://discord.com" target="_blank">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord">
+      </a>
+      <a href="https://instagram.com" target="_blank">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+      </a>
+    </div>
+  </div>
+
+  <!-- Matrix rain script -->
   <script>
     const canvas = document.getElementById("matrix");
     const ctx = canvas.getContext("2d");
@@ -52,7 +160,7 @@
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 
-    const letters = "アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const letters = "01";
     const fontSize = 16;
     const columns = canvas.width / fontSize;
 
@@ -65,7 +173,7 @@
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = "#0F0";
+      ctx.fillStyle = "#ff1a1a"; // RED matrix rain
       ctx.font = fontSize + "px monospace";
 
       for (let i = 0; i < drops.length; i++) {
@@ -79,7 +187,12 @@
       }
     }
 
-    setInterval(draw, 33);
+    setInterval(draw, 35);
+
+    window.addEventListener("resize", () => {
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+    });
   </script>
 </body>
 </html>
