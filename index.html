@@ -119,3 +119,74 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAB Intro</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: red;
+      font-family: monospace;
+      text-align: center;
+    }
+    .full {
+      width: 100%;
+      height: 100vh;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+    #text {
+      font-size: 2em;
+      margin-top: 40vh;
+      animation: glitch 1s infinite;
+    }
+    @keyframes glitch {
+      0% { text-shadow: 2px 2px red; }
+      20% { text-shadow: -2px -2px lime; }
+      40% { text-shadow: 2px -2px blue; }
+      60% { text-shadow: -2px 2px yellow; }
+      100% { text-shadow: 2px 2px red; }
+    }
+    .logos {
+      margin-top: 20px;
+    }
+    .logos img {
+      width: 40px;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="text">YOUR DEVICE HAS BEEN HACKED</h1>
+
+  <!-- Social media logos -->
+  <div class="logos" id="logos" style="display:none;">
+    <p style="color:white;">WAB</p>
+    <img src="img/fb.png">
+    <img src="img/ig.png">
+    <img src="img/dc.png">
+    <img src="img/yt.png">
+  </div>
+
+  <audio id="sound" src="img/wab.mp3"></audio>
+
+  <script>
+    window.onload = () => {
+      const sound = document.getElementById("sound");
+      sound.play();
+
+      // After 5 seconds, show WAB + logos
+      setTimeout(() => {
+        document.getElementById("logos").style.display = "block";
+      }, 5000);
+    }
+  </script>
+</body>
+</html>
