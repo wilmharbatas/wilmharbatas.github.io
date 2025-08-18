@@ -3,132 +3,127 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WAB Intro</title>
+  <title>Hacked</title>
   <style>
     body {
       margin: 0;
-      overflow: hidden;
+      padding: 0;
       background: black;
-      color: white;
+      color: lime;
       font-family: monospace;
+      overflow: hidden;
     }
 
+    /* Matrix rain */
     canvas {
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 0;
-      z-index: -1;
+      z-index: 0;
     }
 
-    .hack-text {
+    /* Centered hacked text */
+    .hacked-text {
       position: absolute;
-      top: 30%;
-      left: 50%;
-      transform: translateX(-50%);
-      color: red;
+      top: 40%;
+      width: 100%;
+      text-align: center;
       font-size: 50px;
       font-weight: bold;
-      text-align: center;
-      text-shadow: 0 0 15px red, 0 0 30px darkred;
+      color: red;
+      z-index: 2;
     }
 
+    /* WAB text */
     .wab-text {
       position: absolute;
       top: 55%;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 25px;
+      width: 100%;
+      text-align: center;
+      font-size: 20px;
       font-weight: bold;
       color: white;
-      text-shadow: 0 0 10px white;
+      z-index: 2;
     }
 
+    /* Social icons */
     .socials {
       position: absolute;
-      top: 65%;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 15px;
+      bottom: 30px;
+      width: 100%;
+      text-align: center;
+      z-index: 2;
     }
 
     .socials img {
-      width: 30px;
-      height: 30px;
-      filter: drop-shadow(0 0 5px white);
+      width: 15px;
+      margin: 0 10px;
     }
 
-    button {
+    /* Music Player */
+    .music-player {
       position: fixed;
-      bottom: 20px;
       right: 20px;
-      background: black;
-      color: red;
-      padding: 10px 15px;
-      border-radius: 10px;
-      border: 2px solid red;
-      font-size: 16px;
-      cursor: pointer;
-      text-shadow: 0 0 10px red;
+      bottom: 20px;
+      z-index: 999;
     }
 
-    button:hover {
+    #playPauseBtn {
       background: red;
-      color: black;
-      text-shadow: 0 0 10px black;
+      color: white;
+      font-size: 16px;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-
-  <!-- Matrix Background -->
   <canvas id="matrix"></canvas>
 
-  <!-- Hacked Text -->
-  <div class="hack-text">YOUR DEVICE HAS BEEN HACKED</div>
-
-  <!-- WAB -->
+  <div class="hacked-text">YOUR DEVICE HAS BEEN HACKED</div>
   <div class="wab-text">WAB</div>
 
-  <!-- Logos -->
   <div class="socials">
-    <img src="fb.png" alt="Facebook">
-    <img src="ig.png" alt="Instagram">
-    <img src="dc.png" alt="Discord">
-    <img src="yt.png" alt="YouTube">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord">
   </div>
 
-  <!-- Music -->
-  <audio id="bg-music" autoplay loop>
-    <source src="grahh.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-
-  <!-- Play/Pause Button -->
-  <button onclick="toggleMusic()">▶ Play / ⏸ Pause</button>
+  <!-- Music Player -->
+  <div class="music-player">
+    <button id="playPauseBtn">▶️ Play</button>
+    <audio id="bgMusic">
+      <source src="grahh.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
 
   <script>
-    // MATRIX BACKGROUND
+    // Matrix rain effect
     const canvas = document.getElementById("matrix");
     const ctx = canvas.getContext("2d");
 
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 
-    const letters = "01";
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     const fontSize = 14;
     const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
+
+    const drops = [];
+    for (let x = 0; x < columns; x++) drops[x] = 1;
 
     function draw() {
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = "#0F0"; 
+      ctx.fillStyle = "lime";
       ctx.font = fontSize + "px monospace";
 
       for (let i = 0; i < drops.length; i++) {
-        const text = letters[Math.floor(Math.random() * letters.length)];
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
         if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
@@ -137,17 +132,22 @@
         drops[i]++;
       }
     }
-    setInterval(draw, 33);
 
-    // MUSIC TOGGLE
-    const music = document.getElementById("bg-music");
-    function toggleMusic() {
+    setInterval(draw, 35);
+
+    // Music play/pause
+    const music = document.getElementById("bgMusic");
+    const playPauseBtn = document.getElementById("playPauseBtn");
+
+    playPauseBtn.addEventListener("click", () => {
       if (music.paused) {
         music.play();
+        playPauseBtn.textContent = "⏸ Pause";
       } else {
         music.pause();
+        playPauseBtn.textContent = "▶️ Play";
       }
-    }
+    });
   </script>
 </body>
 </html>
