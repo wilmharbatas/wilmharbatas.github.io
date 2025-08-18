@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Hacker Style</title>
+  <title>UR·WAB</title>
   <style>
     body {
       margin: 0;
@@ -11,202 +11,152 @@
       font-family: monospace;
     }
 
-    /* Hacked Warning */
+    /* Canvas Background */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    /* Warning Text */
     .warning {
       position: absolute;
-      top: 20px;
+      top: 15%;
       width: 100%;
       text-align: center;
-      font-size: 60px;
+      font-size: 50px;
       font-weight: bold;
       color: red;
-      text-shadow: 0 0 20px red, 0 0 40px darkred;
+      text-shadow: 0 0 15px red, 0 0 25px darkred;
       animation: blink 1s infinite;
-      z-index: 3;
     }
+
     @keyframes blink {
       0%, 50%, 100% { opacity: 1; }
       25%, 75% { opacity: 0; }
     }
 
-    /* UR.WAB Logo */
-    .wab {
+    /* UR·WAB neon blue */
+    .brand {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 80px;
+      top: 40%;
+      width: 100%;
+      text-align: center;
+      font-size: 65px;
       font-weight: bold;
-      color: cyan;
-      text-shadow: 0 0 20px cyan, 0 0 40px blue, 0 0 60px cyan;
-      z-index: 3;
+      color: #00f7ff;
+      text-shadow: 0 0 20px #00f7ff, 0 0 40px #00bfff;
     }
 
-    /* Social Icons */
-    .socials {
+    /* Volume button */
+    #volumeBtn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 30px;
+      color: #00f7ff;
+      cursor: pointer;
+      text-shadow: 0 0 10px #00f7ff;
+    }
+
+    /* Social icons */
+    .social {
       position: absolute;
       bottom: 30px;
       width: 100%;
-      text-align: center;
-      z-index: 3;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
     }
-    .socials img {
-      width: 70px;
-      margin: 0 20px;
-      filter: drop-shadow(0 0 15px cyan);
-    }
-
-    /* Volume Button */
-    .volume-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 28px;
-      color: cyan;
+    .social img {
+      width: 65px;
+      height: 65px;
       cursor: pointer;
-      text-shadow: 0 0 10px cyan, 0 0 20px blue;
-      z-index: 4;
+      transition: transform 0.2s;
     }
-
-    /* Canvas background */
-    canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
+    .social img:hover {
+      transform: scale(1.2);
     }
   </style>
 </head>
 <body>
+  <canvas id="matrix"></canvas>
 
-  <!-- Warning -->
   <div class="warning">YOUR DEVICE HAS BEEN HACKED</div>
+  <div class="brand">UR·WAB</div>
+  <div id="volumeBtn">🔊</div>
 
-  <!-- UR.WAB -->
-  <div class="wab">UR.WAB</div>
-
-  <!-- Socials -->
-  <div class="socials">
-    <img src="fb.png" alt="Facebook">
-    <img src="ig.png" alt="Instagram">
-    <img src="dc.png" alt="Discord">
-    <img src="yt.png" alt="YouTube">
+  <!-- Social Icons -->
+  <div class="social">
+    <a href="https://facebook.com" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
+    </a>
+    <a href="https://instagram.com" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+    </a>
+    <a href="https://discord.com" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png">
+    </a>
+    <a href="https://youtube.com" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+    </a>
   </div>
 
-  <!-- Volume Button -->
-  <div class="volume-btn" id="volumeBtn">🔊</div>
-
-  <!-- Audio -->
+  <!-- Background Music -->
   <audio id="bgMusic" loop>
-    <source src="grahh.mp3" type="audio/mpeg">
+    <source src="HELLA_THUGS.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Canvases -->
-  <canvas id="greenRain"></canvas>
-  <canvas id="blueRain"></canvas>
-
   <script>
-    // Volume control
-    const music = document.getElementById("bgMusic");
-    const volumeBtn = document.getElementById("volumeBtn");
-    let isMuted = false;
+    // Matrix Blue Rain Effect
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
 
-    volumeBtn.addEventListener("click", () => {
-      if (isMuted) {
-        music.play();
-        music.muted = false;
-        volumeBtn.textContent = "🔊";
-        isMuted = false;
-      } else {
-        music.muted = true;
-        volumeBtn.textContent = "🔇";
-        isMuted = true;
-      }
-    });
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
 
-    // Auto-play music when page loads
-    window.addEventListener("click", () => {
-      music.play();
-    }, { once: true });
-
-    // Green Matrix Rain
-    const greenCanvas = document.getElementById("greenRain");
-    const greenCtx = greenCanvas.getContext("2d");
-
-    // Blue Rain
-    const blueCanvas = document.getElementById("blueRain");
-    const blueCtx = blueCanvas.getContext("2d");
-
-    greenCanvas.width = blueCanvas.width = window.innerWidth;
-    greenCanvas.height = blueCanvas.height = window.innerHeight;
-
-    // Green Matrix Letters
-    const letters = "01";
+    const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const fontSize = 16;
-    const columns = greenCanvas.width / fontSize;
+    const columns = canvas.width / fontSize;
+
     const drops = [];
+    for (let x = 0; x < columns; x++) drops[x] = 1;
 
-    for (let x = 0; x < columns; x++) {
-      drops[x] = 1;
-    }
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    function drawGreenRain() {
-      greenCtx.fillStyle = "rgba(0,0,0,0.05)";
-      greenCtx.fillRect(0, 0, greenCanvas.width, greenCanvas.height);
-      greenCtx.fillStyle = "#0f0";
-      greenCtx.font = fontSize + "px monospace";
+      ctx.fillStyle = "#00f7ff"; // BLUE color
+      ctx.font = fontSize + "px monospace";
+
       for (let i = 0; i < drops.length; i++) {
         const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        greenCtx.fillText(text, i * fontSize, drops[i] * fontSize);
-        if (drops[i] * fontSize > greenCanvas.height && Math.random() > 0.975) {
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
         drops[i]++;
       }
     }
+    setInterval(draw, 35);
 
-    // Blue Rain (Gunfire effect)
-    class BlueRainDrop {
-      constructor(x, y, speed) {
-        this.x = x;
-        this.y = y;
-        this.speed = speed;
-      }
-      draw() {
-        blueCtx.fillStyle = "cyan";
-        blueCtx.fillRect(this.x, this.y, 2, 15);
-      }
-      update() {
-        this.y += this.speed;
-        if (this.y > blueCanvas.height) {
-          this.y = -20;
-          this.x = Math.random() * blueCanvas.width;
-          this.speed = Math.random() * 12 + 6;
-        }
-        this.draw();
-      }
-    }
+    // Music Controls
+    const music = document.getElementById("bgMusic");
+    const btn = document.getElementById("volumeBtn");
 
-    let blueDrops = [];
-    function initBlueRain() {
-      blueDrops = [];
-      for (let i = 0; i < 200; i++) {
-        let x = Math.random() * blueCanvas.width;
-        let y = Math.random() * blueCanvas.height;
-        let speed = Math.random() * 12 + 6;
-        blueDrops.push(new BlueRainDrop(x, y, speed));
+    let playing = false;
+    btn.onclick = () => {
+      if (playing) {
+        music.pause();
+        btn.textContent = "🔇";
+      } else {
+        music.play();
+        btn.textContent = "🔊";
       }
-    }
-
-    function animate() {
-      requestAnimationFrame(animate);
-      drawGreenRain();
-      blueCtx.clearRect(0, 0, blueCanvas.width, blueCanvas.height);
-      blueDrops.forEach(drop => drop.update());
-    }
-
-    initBlueRain();
-    animate();
+      playing = !playing;
+    };
   </script>
 </body>
 </html>
