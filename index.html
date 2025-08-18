@@ -2,151 +2,211 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hacked Intro</title>
+  <title>Hacker Style</title>
   <style>
     body {
       margin: 0;
-      height: 100vh;
-      background: black;
       overflow: hidden;
-      color: white;
-      font-family: 'Courier New', monospace;
+      background: black;
+      font-family: monospace;
     }
 
-    canvas {
+    /* Hacked Warning */
+    .warning {
       position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 0;
-    }
-
-    .hack-text {
-      position: absolute;
-      top: 25%;
+      top: 20px;
       width: 100%;
       text-align: center;
       font-size: 60px;
       font-weight: bold;
       color: red;
-      text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px darkred;
-      z-index: 2;
+      text-shadow: 0 0 20px red, 0 0 40px darkred;
+      animation: blink 1s infinite;
+      z-index: 3;
+    }
+    @keyframes blink {
+      0%, 50%, 100% { opacity: 1; }
+      25%, 75% { opacity: 0; }
     }
 
+    /* UR.WAB Logo */
     .wab {
       position: absolute;
-      top: 45%;
-      width: 100%;
-      text-align: center;
-      font-size: 20px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 80px;
       font-weight: bold;
-      color: white;
-      z-index: 2;
+      color: cyan;
+      text-shadow: 0 0 20px cyan, 0 0 40px blue, 0 0 60px cyan;
+      z-index: 3;
     }
 
+    /* Social Icons */
     .socials {
       position: absolute;
       bottom: 30px;
       width: 100%;
       text-align: center;
-      z-index: 2;
+      z-index: 3;
     }
-
     .socials img {
-      width: 70px;  /* mas malaki na */
+      width: 70px;
       margin: 0 20px;
-      transition: transform 0.2s;
+      filter: drop-shadow(0 0 15px cyan);
     }
 
-    .socials img:hover {
-      transform: scale(1.2);
-    }
-
-    .music-control {
+    /* Volume Button */
+    .volume-btn {
       position: absolute;
-      bottom: 30px;
-      right: 30px;
-      z-index: 2;
+      top: 20px;
+      right: 20px;
+      font-size: 28px;
+      color: cyan;
+      cursor: pointer;
+      text-shadow: 0 0 10px cyan, 0 0 20px blue;
+      z-index: 4;
     }
 
-    .music-control button {
-      padding: 10px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      background: red;
-      color: white;
-      cursor: pointer;
+    /* Canvas background */
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
     }
   </style>
 </head>
 <body>
-  <canvas id="matrix"></canvas>
 
-  <div class="hack-text">YOUR DEVICE HAS BEEN HACKED</div>
-  <div class="wab">WAB</div>
+  <!-- Warning -->
+  <div class="warning">YOUR DEVICE HAS BEEN HACKED</div>
 
+  <!-- UR.WAB -->
+  <div class="wab">UR.WAB</div>
+
+  <!-- Socials -->
   <div class="socials">
-    <a href="https://facebook.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"></a>
-    <a href="https://instagram.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"></a>
-    <a href="https://discord.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord"></a>
+    <img src="fb.png" alt="Facebook">
+    <img src="ig.png" alt="Instagram">
+    <img src="dc.png" alt="Discord">
+    <img src="yt.png" alt="YouTube">
   </div>
 
-  <div class="music-control">
-    <button id="playPauseBtn">⏸ Pause</button>
-  </div>
+  <!-- Volume Button -->
+  <div class="volume-btn" id="volumeBtn">🔊</div>
 
-  <audio id="bgMusic" autoplay loop>
+  <!-- Audio -->
+  <audio id="bgMusic" loop>
     <source src="grahh.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- Canvases -->
+  <canvas id="greenRain"></canvas>
+  <canvas id="blueRain"></canvas>
+
   <script>
-    // MATRIX BACKGROUND
-    const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
+    // Volume control
+    const music = document.getElementById("bgMusic");
+    const volumeBtn = document.getElementById("volumeBtn");
+    let isMuted = false;
 
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
+    volumeBtn.addEventListener("click", () => {
+      if (isMuted) {
+        music.play();
+        music.muted = false;
+        volumeBtn.textContent = "🔊";
+        isMuted = false;
+      } else {
+        music.muted = true;
+        volumeBtn.textContent = "🔇";
+        isMuted = true;
+      }
+    });
 
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    // Auto-play music when page loads
+    window.addEventListener("click", () => {
+      music.play();
+    }, { once: true });
+
+    // Green Matrix Rain
+    const greenCanvas = document.getElementById("greenRain");
+    const greenCtx = greenCanvas.getContext("2d");
+
+    // Blue Rain
+    const blueCanvas = document.getElementById("blueRain");
+    const blueCtx = blueCanvas.getContext("2d");
+
+    greenCanvas.width = blueCanvas.width = window.innerWidth;
+    greenCanvas.height = blueCanvas.height = window.innerHeight;
+
+    // Green Matrix Letters
+    const letters = "01";
     const fontSize = 16;
-    const columns = canvas.width / fontSize;
-
+    const columns = greenCanvas.width / fontSize;
     const drops = [];
-    for (let x = 0; x < columns; x++) drops[x] = 1;
 
-    function draw() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    for (let x = 0; x < columns; x++) {
+      drops[x] = 1;
+    }
 
-      ctx.fillStyle = "#0F0";
-      ctx.font = fontSize + "px monospace";
-
+    function drawGreenRain() {
+      greenCtx.fillStyle = "rgba(0,0,0,0.05)";
+      greenCtx.fillRect(0, 0, greenCanvas.width, greenCanvas.height);
+      greenCtx.fillStyle = "#0f0";
+      greenCtx.font = fontSize + "px monospace";
       for (let i = 0; i < drops.length; i++) {
         const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        greenCtx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > greenCanvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
         drops[i]++;
       }
     }
-    setInterval(draw, 35);
 
-    // MUSIC CONTROL
-    const bgMusic = document.getElementById("bgMusic");
-    const playPauseBtn = document.getElementById("playPauseBtn");
-
-    playPauseBtn.addEventListener("click", () => {
-      if (bgMusic.paused) {
-        bgMusic.play();
-        playPauseBtn.textContent = "⏸ Pause";
-      } else {
-        bgMusic.pause();
-        playPauseBtn.textContent = "▶ Play";
+    // Blue Rain (Gunfire effect)
+    class BlueRainDrop {
+      constructor(x, y, speed) {
+        this.x = x;
+        this.y = y;
+        this.speed = speed;
       }
-    });
+      draw() {
+        blueCtx.fillStyle = "cyan";
+        blueCtx.fillRect(this.x, this.y, 2, 15);
+      }
+      update() {
+        this.y += this.speed;
+        if (this.y > blueCanvas.height) {
+          this.y = -20;
+          this.x = Math.random() * blueCanvas.width;
+          this.speed = Math.random() * 12 + 6;
+        }
+        this.draw();
+      }
+    }
+
+    let blueDrops = [];
+    function initBlueRain() {
+      blueDrops = [];
+      for (let i = 0; i < 200; i++) {
+        let x = Math.random() * blueCanvas.width;
+        let y = Math.random() * blueCanvas.height;
+        let speed = Math.random() * 12 + 6;
+        blueDrops.push(new BlueRainDrop(x, y, speed));
+      }
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      drawGreenRain();
+      blueCtx.clearRect(0, 0, blueCanvas.width, blueCanvas.height);
+      blueDrops.forEach(drop => drop.update());
+    }
+
+    initBlueRain();
+    animate();
   </script>
 </body>
 </html>
