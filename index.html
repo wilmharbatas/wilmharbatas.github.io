@@ -52,6 +52,7 @@
       color: #00f7ff;
       cursor: pointer;
       text-shadow: 0 0 10px #00f7ff;
+      display: none; /* hidden until start */
     }
     /* SOCIAL ICONS */
     .social {
@@ -61,6 +62,7 @@
       display: flex;
       justify-content: center;
       gap: 50px;
+      display: none; /* hidden until start */
     }
     .social img {
       width: 80px;
@@ -70,6 +72,24 @@
     }
     .social img:hover {
       transform: scale(1.2);
+    }
+    /* START SCREEN */
+    #startScreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      color: #00f7ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 40px;
+      font-weight: bold;
+      text-shadow: 0 0 15px #00f7ff, 0 0 30px #00bfff;
+      cursor: pointer;
+      z-index: 10;
     }
   </style>
 </head>
@@ -96,9 +116,12 @@
   </div>
 
   <!-- BACKGROUND MUSIC -->
-  <audio id="bgMusic" loop autoplay>
+  <audio id="bgMusic" loop>
     <source src="grahh.mp3" type="audio/mpeg">
   </audio>
+
+  <!-- START SCREEN -->
+  <div id="startScreen">▶ TAP TO START</div>
 
   <script>
     // Matrix Green Effect
@@ -128,10 +151,19 @@
     }
     setInterval(draw, 35);
 
-    // Music Button
+    // Music & Start Screen
     const music = document.getElementById("bgMusic");
     const btn = document.getElementById("volumeBtn");
-    music.volume = 0.7; // default volume 70%
+    const social = document.querySelector(".social");
+    const startScreen = document.getElementById("startScreen");
+
+    startScreen.addEventListener("click", () => {
+      music.play();
+      music.volume = 0.7;
+      startScreen.style.display = "none";
+      btn.style.display = "block";
+      social.style.display = "flex";
+    });
 
     btn.addEventListener("click", () => {
       if (music.muted) {
