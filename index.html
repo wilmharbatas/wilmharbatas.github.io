@@ -10,37 +10,32 @@
       background: black;
       font-family: monospace;
     }
-
-    /* Canvas Background */
     canvas {
       position: fixed;
       top: 0;
       left: 0;
       z-index: -1;
     }
-
-    /* Warning Text */
+    /* RED BLINKING WARNING */
     .warning {
       position: absolute;
-      top: 15%;
+      top: 10%;
       width: 100%;
       text-align: center;
-      font-size: 50px;
+      font-size: 60px;
       font-weight: bold;
       color: red;
       text-shadow: 0 0 15px red, 0 0 25px darkred;
       animation: blink 1s infinite;
     }
-
     @keyframes blink {
       0%, 50%, 100% { opacity: 1; }
       25%, 75% { opacity: 0; }
     }
-
-    /* UR·WAB neon blue */
+    /* NEON BLUE WAB */
     .brand {
       position: absolute;
-      top: 40%;
+      top: 35%;
       width: 100%;
       text-align: center;
       font-size: 65px;
@@ -48,8 +43,7 @@
       color: #00f7ff;
       text-shadow: 0 0 20px #00f7ff, 0 0 40px #00bfff;
     }
-
-    /* Volume button */
+    /* VOLUME BUTTON */
     #volumeBtn {
       position: absolute;
       top: 15px;
@@ -59,19 +53,18 @@
       cursor: pointer;
       text-shadow: 0 0 10px #00f7ff;
     }
-
-    /* Social icons */
+    /* SOCIAL ICONS */
     .social {
       position: absolute;
       bottom: 30px;
       width: 100%;
       display: flex;
       justify-content: center;
-      gap: 40px;
+      gap: 50px;
     }
     .social img {
-      width: 65px;
-      height: 65px;
+      width: 80px;
+      height: 80px;
       cursor: pointer;
       transition: transform 0.2s;
     }
@@ -87,7 +80,6 @@
   <div class="brand">UR·WAB</div>
   <div id="volumeBtn">🔊</div>
 
-  <!-- Social Icons -->
   <div class="social">
     <a href="https://facebook.com" target="_blank">
       <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
@@ -103,60 +95,53 @@
     </a>
   </div>
 
-  <!-- Background Music -->
-  <audio id="bgMusic" loop>
-    <source src="HELLA_THUGS.mp3" type="audio/mpeg">
+  <!-- BACKGROUND MUSIC -->
+  <audio id="bgMusic" loop autoplay>
+    <source src="grahh.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    // Matrix Blue Rain Effect
+    // Matrix Green Effect
     const canvas = document.getElementById("matrix");
     const ctx = canvas.getContext("2d");
-
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 
     const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const fontSize = 16;
     const columns = canvas.width / fontSize;
-
     const drops = [];
     for (let x = 0; x < columns; x++) drops[x] = 1;
 
     function draw() {
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = "#00f7ff"; // BLUE color
+      ctx.fillStyle = "#00ff00";
       ctx.font = fontSize + "px monospace";
 
       for (let i = 0; i < drops.length; i++) {
         const text = letters.charAt(Math.floor(Math.random() * letters.length));
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
         drops[i]++;
       }
     }
     setInterval(draw, 35);
 
-    // Music Controls
+    // Music Button
     const music = document.getElementById("bgMusic");
     const btn = document.getElementById("volumeBtn");
+    music.volume = 0.7; // default volume 70%
 
-    let playing = false;
-    btn.onclick = () => {
-      if (playing) {
-        music.pause();
-        btn.textContent = "🔇";
-      } else {
-        music.play();
+    btn.addEventListener("click", () => {
+      if (music.muted) {
+        music.muted = false;
         btn.textContent = "🔊";
+      } else {
+        music.muted = true;
+        btn.textContent = "🔇";
       }
-      playing = !playing;
-    };
+    });
   </script>
 </body>
 </html>
